@@ -1,12 +1,17 @@
-import { Socket } from "net";
-import { BrowserWindow, Menu, nativeImage } from "electron";
+import * as path from "path";
+import type { Socket } from "net";
+import { BrowserWindow, Menu } from "electron";
+
 import { browserViewMediateService } from "./browserView";
-const path = require("path");
+
 const windows: Electron.BrowserWindow[] = (global["browserWindows"] =
   global["browserWindows"] || []) as Electron.BrowserWindow[];
 let readyToShowWindowsIds: number[] = [];
-let window, lastOptions, electronSocket;
-let mainWindowURL;
+
+let window;
+let lastOptions;
+let electronSocket;
+
 const proxyToCredentialsMap: { [proxy: string]: string } = (global[
   "proxyToCredentialsMap"
 ] = global["proxyToCredentialsMap"] || []) as { [proxy: string]: string };
@@ -32,7 +37,7 @@ export = (socket: Socket, app: Electron.App) => {
   socket.on("register-browserWindow-ready-to-show", (id) => {
     if (readyToShowWindowsIds.includes(id)) {
       readyToShowWindowsIds = readyToShowWindowsIds.filter(
-        (value) => value !== id
+        (value) => value !== id,
       );
       electronSocket.emit("browserWindow-ready-to-show" + id);
     }
@@ -141,7 +146,11 @@ export = (socket: Socket, app: Electron.App) => {
 
   socket.on("register-browserWindow-bounds-changed", (id) => {
     const window = getWindowById(id);
-    const cb = () => electronSocket.emit("browserWindow-bounds-changed" + id, window.getBounds());
+    const cb = () =>
+      electronSocket.emit(
+        "browserWindow-bounds-changed" + id,
+        window.getBounds(),
+      );
     window.on("resize", cb);
     window.on("move", cb);
   });
@@ -231,7 +240,7 @@ export = (socket: Socket, app: Electron.App) => {
         __dirname,
         "..",
         "scripts",
-        "blazor-preload.js"
+        "blazor-preload.js",
       );
     }
 
@@ -264,7 +273,7 @@ export = (socket: Socket, app: Electron.App) => {
     window.on("ready-to-show", () => {
       if (readyToShowWindowsIds.includes(window.id)) {
         readyToShowWindowsIds = readyToShowWindowsIds.filter(
-          (value) => value !== window.id
+          (value) => value !== window.id,
         );
       } else {
         readyToShowWindowsIds.push(window.id);
@@ -531,7 +540,7 @@ export = (socket: Socket, app: Electron.App) => {
 
     electronSocket.emit(
       "browserWindow-isFullScreenable-completed",
-      fullscreenable
+      fullscreenable,
     );
   });
 
@@ -616,7 +625,7 @@ export = (socket: Socket, app: Electron.App) => {
       .toString(16);
     electronSocket.emit(
       "browserWindow-getNativeWindowHandle-completed",
-      nativeWindowHandle
+      nativeWindowHandle,
     );
   });
 
@@ -629,7 +638,7 @@ export = (socket: Socket, app: Electron.App) => {
     } catch (e) {
       console.warn(
         "setRepresentedFilename failed (likely unsupported platform):",
-        e
+        e,
       );
     }
   });
@@ -644,12 +653,12 @@ export = (socket: Socket, app: Electron.App) => {
     } catch (e) {
       console.warn(
         "getRepresentedFilename failed (likely unsupported platform):",
-        e
+        e,
       );
     }
     electronSocket.emit(
       "browserWindow-getRepresentedFilename-completed",
-      pathname
+      pathname,
     );
   });
 
@@ -741,7 +750,7 @@ export = (socket: Socket, app: Electron.App) => {
           imagePath = path.join(
             __dirname.replace("api", ""),
             "bin",
-            originalIconPath
+            originalIconPath,
           );
         }
         const { nativeImage } = require("electron");
@@ -758,7 +767,7 @@ export = (socket: Socket, app: Electron.App) => {
 
       const success = getWindowById(id).setThumbarButtons(thumbarButtons);
       electronSocket.emit("browserWindowSetThumbarButtons-completed", success);
-    }
+    },
   );
 
   socket.on("browserWindowSetThumbnailClip", (id, rectangle) => {
@@ -786,7 +795,7 @@ export = (socket: Socket, app: Electron.App) => {
 
     electronSocket.emit(
       "browserWindow-isMenuBarAutoHide-completed",
-      isMenuBarAutoHide
+      isMenuBarAutoHide,
     );
   });
 
@@ -799,7 +808,7 @@ export = (socket: Socket, app: Electron.App) => {
 
     electronSocket.emit(
       "browserWindow-isMenuBarVisible-completed",
-      isMenuBarVisible
+      isMenuBarVisible,
     );
   });
 
@@ -813,7 +822,7 @@ export = (socket: Socket, app: Electron.App) => {
 
     electronSocket.emit(
       "browserWindow-isVisibleOnAllWorkspaces-completed",
-      isVisibleOnAllWorkspaces
+      isVisibleOnAllWorkspaces,
     );
   });
 
@@ -845,7 +854,7 @@ export = (socket: Socket, app: Electron.App) => {
 
     electronSocket.emit(
       "browserWindow-getParentWindow-completed",
-      browserWindow.id
+      browserWindow.id,
     );
   });
 
