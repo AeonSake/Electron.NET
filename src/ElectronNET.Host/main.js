@@ -24,26 +24,6 @@ let unpackeddotnet = false;
 let dotnetpacked = false;
 let electronforcedport;
 
-if (app.commandLine.hasSwitch('manifest')) {
-    manifestJsonFileName = app.commandLine.getSwitchValue('manifest');
-}
-
-console.log('Entry!!!:  ');
-
-if (app.commandLine.hasSwitch('unpackedelectron')) {
-    unpackedelectron = true;
-}
-else if (app.commandLine.hasSwitch('unpackeddotnet')) {
-    unpackeddotnet = true;
-}
-else if (app.commandLine.hasSwitch('dotnetpacked')) {
-    dotnetpacked = true;
-}
-
-if (app.commandLine.hasSwitch('electronforcedport')) {
-    electronforcedport = app.commandLine.getSwitchValue('electronforcedport');
-}
-
 // Custom startup hook: look for custom_main.js and invoke its onStartup(host) if present.
 // If the hook returns false, abort Electron startup.
 try {
@@ -65,6 +45,26 @@ try {
     }
 } catch (err) {
     console.error('Error while executing custom_main.js:', err);
+}
+
+if (app.commandLine.hasSwitch('manifest')) {
+    manifestJsonFileName = app.commandLine.getSwitchValue('manifest');
+}
+
+console.log('Entry!!!:  ');
+
+if (app.commandLine.hasSwitch('unpackedelectron')) {
+    unpackedelectron = true;
+}
+else if (app.commandLine.hasSwitch('unpackeddotnet')) {
+    unpackeddotnet = true;
+}
+else if (app.commandLine.hasSwitch('dotnetpacked')) {
+    dotnetpacked = true;
+}
+
+if (app.commandLine.hasSwitch('electronforcedport')) {
+    electronforcedport = app.commandLine.getSwitchValue('electronforcedport');
 }
 
 const currentPath = __dirname;
