@@ -235,8 +235,8 @@ export = (socket: Socket, app: Electron.App) => {
       };
     }
 
-    if (options.isRunningBlazor) {
-      options.webPreferences["preload"] = path.join(
+    if (options.isRunningBlazor && !options.webPreferences.preload) {
+      options.webPreferences.preload = path.join(
         __dirname,
         "..",
         "scripts",
