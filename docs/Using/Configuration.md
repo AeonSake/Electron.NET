@@ -99,7 +99,7 @@ BrowserWindowOptions browserWindowOptions = new BrowserWindowOptions
 ```
 
 > [!IMPORTANT]
-> When using a preload script _AND_ running a Blazor app, the following lines must be added to the preload script:
+> When using a preload script _AND_ running a Blazor app, `IsRunningBlazor` must be set to `false` (or removed) and the following lines must be added to the preload script:
 > ```js
 > global.process = undefined;
 > global.module = undefined;
