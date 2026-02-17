@@ -220,8 +220,8 @@ module.exports = (socket, app) => {
                 webPreferences: { nodeIntegration: true, contextIsolation: false },
             };
         }
-        if (options.isRunningBlazor && !options.webPreferences.preload) {
-            options.webPreferences.preload = path.join(__dirname, "..", "scripts", "blazor-preload.js");
+        if (options.isRunningBlazor) {
+            options.webPreferences["preload"] = path.join(__dirname, "..", "scripts", "blazor-preload.js");
         }
         delete options.isRunningBlazor;
         // we dont want to recreate the window when watch is ready.
