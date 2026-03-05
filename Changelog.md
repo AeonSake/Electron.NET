@@ -1,3 +1,9 @@
+## 0.5.0
+
+## ElectronNET.Core
+
+- tbd
+
 # 0.4.1
 
 ## ElectronNET.Core
